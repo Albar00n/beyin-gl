@@ -3,8 +3,7 @@
     "version": "0.1.0",
     "description": "Generated with generator-harp.gl 0.28.0",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "webpack",
+        "build": "webpack build",
         "start": "webpack serve"
     },
     "author": "",
