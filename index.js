@@ -1,14 +1,15 @@
-import{ APIFormat} from "@here/harp-vectortile-datasource";
+
 import { VectorTileDataSource, GeoJsonDataProvider } from "@here/harp-vectortile-datasource";
 import { Theme } from "@here/harp-datasource-protocol";
 import { MapViewEventNames } from "@here/harp-mapview";
 import { GeoCoordinates } from "@here/harp-geoutils";
 import { View } from "./View";
-// import { GUI } from "dat.gui";
+import { GUI } from "dat.gui";
+
 
 const app = new View({
     canvas: document.getElementById("map"),
-    
+
 });
 
 const mapView = app.mapView;
@@ -72,52 +73,42 @@ async function getWirelessHotspots() {
        zoomLevel: 16,
     });
     mapView.update();
+    const gui = new GUI({ width: 300 });
+
+
+    const options = {
+      theme: {
+
+          reducedDay: "resources/theme.json",
+          streets: "resources/street.json",
+          berlin:"resources/berlin.json",
+          default:"resources/default.json",
+          global:"resources/global.json",
+          night:"resources/night.json",
+          outline:"resources/outline.json",
+      }
+  };
+
+
+  gui.add(options, "theme", options.theme)
+      .onChange(async (value) => {
+          await mapView.setTheme(value);
+      })
+      .setValue("resources/night.json");
+    //   gui.add(options, "tilt", 0, 80, 0.1);
+    //   gui.add(options, "zoomLevel", 1, 20, 0.1);
+    //   gui.add(options, "globe").onChange(() => {
+    //     map.projection = options.globe ? sphereProjection : mercatorProjection;
+    // });
+    // gui.add(options, "headingSpeed", 0.1, 10, 0.1);
+    // const stats = new GUI();
+    // stats.dom.style.bottom = "0px";
+    // stats.dom.style.top = "";
+    // document.body.appendChild(stats.dom);
+    // map.addEventListener(MapViewEventNames.Render, () => {
+    //     stats.end();
+    //     stats.begin();
+    // });
 }
 
 getWirelessHotspots();
-// async function addRailRoads() {
-//     const globalRailroads = new VectorTileDataSource({
-//        baseUrl: "https://xyz.api.here.com/hub/spaces/hUJ4ZHJR/tile/web",
-//        apiFormat: APIFormat.XYZSpace,
-//        authenticationCode: 'ACbs-cqcFI4FlPRLK_VF1co', //Use this token!
-//        styleSetName: "geojson"
-//     });
-
-//     await mapView.addDataSource(globalRailroads);
-//     const theme = {
-//       styles: {
-//         geojson: [
-//           {
-//             when: ["==", ["geometry-type"], "LineString"],
-//             renderOrder: 1000,
-//             technique: "solid-line",
-//             color: "#D73060",
-//             opacity: 1,
-//             metricUnit: "Pixel",
-//             lineWidth: 1,
-//           },
-//         ],
-//       },
-//     };
-//     globalRailroads.setTheme(theme);
-//     mapView.update();
-//  }
-//  addRailRoads();
-
-
-//  const gui = new GUI({ width: 300 });
-//  const options = {
-//      theme: {
-//          day: "resources/berlin_tilezen_base.json",
-//          reducedDay: "resources/berlin_tilezen_day_reduced.json",
-//          reducedNight: "resources/berlin_tilezen_night_reduced.json",
-//          streets: "resources/berlin_tilezen_effects_streets.json",
-//          outlines: "resources/berlin_tilezen_effects_outlines.json"
-//      }
-//  };
-//  gui.add(options, "theme", options.theme)
-//      .onChange(async (value) => {
-//          await mapView.setTheme(value);
-//      })
-//      .setValue("resources/theme.json");
-

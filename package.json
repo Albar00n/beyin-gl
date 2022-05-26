@@ -18,6 +18,7 @@
         "@here/harp-vectortile-datasource": "^0.28.0",
         "@here/harp-webpack-utils": "^0.28.0",
         "@here/harp.gl": "^0.28.0",
+        "dat.gui": "^0.7.7",
         "three": "^0.129.0"
     },
     "devDependencies": {
